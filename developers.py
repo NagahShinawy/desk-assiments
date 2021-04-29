@@ -22,9 +22,8 @@ class Person:
         print(f"DOB: {self._date_tostring}")
         print(f"Age: {self.age}")
 
-    @property
-    def _date_tostring(self):
-        return self.dob.strftime(self.DATEFORMAT)
+    def _date_tostring(self, dateobj):
+        return dateobj.strftime(self.DATEFORMAT)
 
     def __calculate_age(self):
         today = date.today()
@@ -53,13 +52,15 @@ class Developer(Person, JsonHandler):
         print(f"team: {self.team}")
 
     def _to_json(self):
+        join_datetime = self._date_tostring(datetime.now())
         return {
             "name": self.name,
-            "dob": self._date_tostring,
+            "dob": self._date_tostring(self.dob),
             "age": self.age,
             "job": self.job,
             "team": self.team.team_name,
-            "tl": {"tl_name": self.team.tl.name}
+            "tl": {"tl_name": self.team.tl.name},
+            "join_date": join_datetime
         }
 
 

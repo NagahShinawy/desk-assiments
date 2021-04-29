@@ -24,7 +24,7 @@ def main():
 
     #########################
 
-    java_members = [test, sara, smith]
+    java_members = [test, smith, sara]
     for member in java_members:
         member.join_member_to_team(java_team)
 

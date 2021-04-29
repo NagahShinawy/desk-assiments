@@ -6,7 +6,7 @@ from datetime import date, datetime
 from mixin import JsonHandler
 
 
-class Person:
+class Member:
     DATEFORMAT = "%Y-%m-%d"
 
     def __init__(self, name, dob):
@@ -34,15 +34,17 @@ class Person:
         )
 
 
-class Developer(Person, JsonHandler):
+class Developer(Member, JsonHandler):
 
     def __init__(self, name, dob, job):
         super().__init__(name, dob)
         self.job = job
         self.team = None
+        self.desk = None
 
-    def join_member_to_team(self, team):
+    def join_member_to_team(self, team, desk):
         self.team = team
+        self.desk = desk
         team.members.append(self)
         self.save()
 
@@ -53,6 +55,7 @@ class Developer(Person, JsonHandler):
 
     def _to_json(self):
         join_datetime = self._date_tostring(datetime.now())
+        desk = self.desk
         return {
             "name": self.name,
             "dob": self._date_tostring(self.dob),
@@ -60,14 +63,15 @@ class Developer(Person, JsonHandler):
             "job": self.job,
             "team": self.team.team_name,
             "tl": {"tl_name": self.team.tl.name},
-            "join_date": join_datetime
+            "join_date": join_datetime,
+            "desk": {"location": desk.location, "created": self._date_tostring(desk.created)}
         }
 
 
 class TechnicalLead(Developer):
 
-    def join_member_to_team(self, team):
-        super().join_member_to_team(team)
+    def join_member_to_team(self, team, desk):
+        super().join_member_to_team(team, desk)
 
     def save(self):
         self.team.tl = self

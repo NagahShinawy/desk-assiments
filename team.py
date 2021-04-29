@@ -15,3 +15,6 @@ class Team:
 
     def __getitem__(self, item):
         return self.members[item]
+
+    def __contains__(self, item):
+        return item in self.members

@@ -6,7 +6,6 @@ import os
 
 
 class JsonFile:
-
     @classmethod
     def load(cls):
         fname = cls.__name__ + ".json"
@@ -20,6 +19,7 @@ class JsonFile:
         cls = self.__class__
         fname = cls.__name__ + ".json"
         data = cls.load()
+
         obj = self._to_json()
         if obj not in data:
             data.append(obj)

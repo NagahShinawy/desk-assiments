@@ -33,23 +33,26 @@ def main():
 
     backend_members = [(james, c101), (leon, c202), (nagah, c303), (john, c404)]
     for member, desk in backend_members:
+        desk.activate_desk(member)
         member.join_member_to_team(backend_team, desk)
 
     #########################
 
     java_members = [(test, c505), (smith, c606), (sara, c707)]
     for member, desk in java_members:
+        desk.activate_desk(member)
         member.join_member_to_team(java_team, desk)
-
+    #
     for member in backend_team:
         member.show_info()
         print("#" * 50)
 
-    #########################
+    ########################
     employees = [sara, nagah, leon, test, james]
     for emp in employees:
         print(emp, emp in backend_team)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
+
